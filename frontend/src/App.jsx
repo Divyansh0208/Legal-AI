@@ -55,6 +55,7 @@ function NavBar() {
           type="button"
           className="ml-auto rounded-md p-2 text-ink/70 hover:bg-ink/5 sm:hidden"
           aria-expanded={open}
+          aria-controls="mobile-nav"
           aria-label={open ? "Close menu" : "Open menu"}
           onClick={() => setOpen((v) => !v)}
         >
@@ -69,7 +70,7 @@ function NavBar() {
       </nav>
 
       {open && (
-        <div className="flex flex-col gap-1 border-t border-ink/10 px-4 pb-3 pt-2 sm:hidden">{links}</div>
+        <div id="mobile-nav" className="flex flex-col gap-1 border-t border-ink/10 px-4 pb-3 pt-2 sm:hidden">{links}</div>
       )}
     </header>
   );
@@ -78,8 +79,14 @@ function NavBar() {
 export default function App() {
   return (
     <div className="min-h-screen bg-paper text-ink">
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-moss focus:px-4 focus:py-2 focus:text-paper"
+      >
+        Skip to content
+      </a>
       <NavBar />
-      <main>
+      <main id="main-content">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/chat" element={<Chat />} />
