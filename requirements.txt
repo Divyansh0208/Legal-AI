@@ -10,6 +10,13 @@ groq==0.11.0
 langchain==0.3.1
 langchain-text-splitters==0.3.0
 chromadb==0.5.5
+
+# CPU-only torch: avoids the nvidia-cu13/triton/cuda-toolkit stack pulled in by
+# the default PyPI wheel, which is unused (and slow to import) on Render's
+# instance. Pinning the version here so both torch and sentence-transformers
+# resolve from this index consistently.
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.4.1
 sentence-transformers==3.1.1
 
 # Document parsing
