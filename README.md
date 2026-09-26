@@ -4,33 +4,34 @@ AI-powered legal assistant — RAG-based Q&A, document analysis, and voice suppo
 
 ## Problem Statement
 
-Legal assistance is often inaccessible due to cost, complexity, and language barriers. This platform provides AI-driven legal guidance, document understanding, and multilingual support to bridge that gap.
+Legal assistance is often inaccessible due to cost, complexity, and language barriers. This platform provides AI-driven legal guidance and document understanding in plain, jargon-free language.
 
 ## Tech Stack
 
 | Layer | Technology |
 |---|---|
 | Backend | FastAPI |
-| LLM | Groq API (Llama3-70B / Mixtral) |
+| LLM | Groq API (openai/gpt-oss-120b) |
 | RAG Framework | LangChain |
 | Vector DB | ChromaDB |
 | Embeddings | sentence-transformers (all-MiniLM-L6-v2) |
 | Document Parsing | PyMuPDF, pytesseract (OCR) |
 | Speech-to-Text | Groq Whisper API |
-| Frontend | React + Vite (JavaScript) |
+| Frontend | React + Vite (JavaScript), Tailwind CSS |
 | Security | slowapi, python-magic, security headers, bandit |
-| Accessibility | shadcn/ui, eslint-plugin-jsx-a11y, axe-core |
-| Database | PostgreSQL / SQLite |
+| Accessibility | eslint-plugin-jsx-a11y, axe-core (CI) |
+| Database | SQLite |
 | Deployment | Render (backend), Vercel (frontend) |
-| CI/CD | GitHub Actions |
+| CI/CD | GitHub Actions (lint, test, security, a11y, deploy) |
 
 ## Features
 
-- Legal document Q&A via RAG
+- Legal document Q&A via RAG, grounded in uploaded documents
 - OCR support for scanned legal documents
-- Voice input for queries
-- Multilingual support (English + regional languages)
-- Secure, validated file uploads
+- Voice input for queries (Groq Whisper)
+- Plain-language answers with mandatory legal disclaimers
+- Prompt-injection resistant: uploaded documents and retrieved context are treated as data, never instructions
+- Secure, validated file uploads (real MIME sniffing, not just file extension)
 
 ## Setup
 
@@ -38,7 +39,7 @@ Legal assistance is often inaccessible due to cost, complexity, and language bar
 git clone <repo-url>
 cd <repo-name>
 pip install -r requirements.txt
-cp .env.example .env   # add GROQ_API_KEY, DB_URL etc.
+cp .env.example .env   # add GROQ_API_KEY
 uvicorn main:app --reload
 ```
 
@@ -51,30 +52,37 @@ npm run dev
 
 ## Environment Variables
 
-```
 GROQ_API_KEY=
-DATABASE_URL=
-CHROMA_DB_PATH=
-```
+
+GROQ_LLM_MODEL=openai/gpt-oss-120b
+
+GROQ_WHISPER_MODEL=whisper-large-v3
+
+DATABASE_URL=sqlite:///./data/app.db
+
+CHROMA_DB_PATH=./data/chroma
+
 
 ## Testing
 
 ```bash
-pytest tests/
+pytest
 ```
 
 ## Deployment
 
-- Backend: Render (auto-deploy via GitHub Actions on push to `main`)
-- Frontend: Vercel
+- Backend: Render (deploy hook wired into GitHub Actions on push to `main`)
+- Frontend: Vercel (auto-deploy via Vercel's GitHub integration)
 
 ## Security Notes
 
 - No API keys committed; `.env` used and gitignored
-- File upload type (python-magic) and size validation
-- Rate limiting via slowapi on public endpoints
-- Security headers middleware (CSP, X-Frame-Options, HSTS)
-- bandit static security scan + dependency vulnerability scanning via GitHub Actions
+- File upload type verified via python-magic content sniffing, not client-supplied extension
+- File size limits enforced on both document and audio uploads
+- Rate limiting via slowapi on query, upload, and voice endpoints
+- Security headers middleware (CSP, X-Frame-Options, HSTS in production)
+- System prompt explicitly treats retrieved context and uploaded documents as untrusted data, and refuses harassment, forged-document, and law-evasion requests regardless of framing
+- bandit static security scan + dependency checks via GitHub Actions
 
 ## License
 
