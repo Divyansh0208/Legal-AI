@@ -2,6 +2,7 @@ import os
 import uuid
 
 from fastapi import APIRouter, UploadFile, File, Depends, Request, HTTPException
+from fastapi.concurrency import run_in_threadpool
 from sqlalchemy.orm import Session
 
 from app.api.schemas import UploadResponse
@@ -29,7 +30,7 @@ async def upload_document(
     if not file.filename.lower().endswith(".pdf"):
         raise HTTPException(status_code=415, detail="Only PDF uploads are supported currently.")
 
-    text, page_count, ocr_used = extract_text_from_pdf(contents)
+    text, page_count, ocr_used = await run_in_threadpool(extract_text_from_pdf, contents)
     if not text.strip():
         raise HTTPException(status_code=422, detail="No extractable text found in document.")
 
@@ -39,8 +40,8 @@ async def upload_document(
     with open(stored_path, "wb") as f:
         f.write(contents)
 
-    chunks_indexed = index_document(document_id, text, source_name=file.filename)
-    summary = summarize_document(text)
+    chunks_indexed = await run_in_threadpool(index_document, document_id, text, file.filename)
+    summary = await run_in_threadpool(summarize_document, text)
 
     record = LegalDocument(
         id=document_id,
