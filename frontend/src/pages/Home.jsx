@@ -44,7 +44,7 @@ const features = [
 export default function Home() {
   return (
     <div className="mx-auto max-w-3xl px-6 py-16 sm:py-24">
-      <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-ink/15 bg-white px-3 py-1 text-xs font-medium tracking-wide text-ink/60">
+      <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-ink/15 bg-white px-3 py-1 text-xs font-medium tracking-wide text-ink/70">
         <span className="h-1.5 w-1.5 rounded-full bg-moss" aria-hidden="true" />
         Plain-language legal help
       </p>
@@ -88,7 +88,7 @@ export default function Home() {
         ))}
       </div>
 
-      <p className="mt-12 border-t border-ink/10 pt-6 text-sm text-ink/50">
+      <p className="mt-12 border-t border-ink/10 pt-6 text-sm text-ink/70">
         This tool gives general legal information, not legal advice. For anything urgent
         or high-stakes, please speak with a qualified lawyer or local legal aid service.
       </p>
