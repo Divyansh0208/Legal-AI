@@ -1,0 +1,27 @@
+# --- Python ---
+__pycache__/
+*.pyc
+.venv/
+*.egg-info/
+
+# --- Env ---
+.env
+
+# --- Data (generated at runtime) ---
+data/*.db
+data/chroma/
+data/test_chroma/
+uploads/*
+!uploads/.gitkeep
+
+# --- Node / frontend ---
+frontend/node_modules/
+frontend/dist/
+
+# --- Editors / OS ---
+.vscode/
+.DS_Store
+
+# --- Test ---
+.pytest_cache/
+.coverage

@@ -1,0 +1,15 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy-backend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Render deploy hook
+        run: curl -fsS -X POST "${{ secrets.RENDER_DEPLOY_HOOK_URL }}"
+
+  # Frontend deploys are handled by Vercel's own GitHub integration
+  # (auto-deploys on push to main once the repo is connected in Vercel).

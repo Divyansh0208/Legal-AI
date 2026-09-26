@@ -1,0 +1,47 @@
+@import "tailwindcss";
+@config "../tailwind.config.js";
+
+@layer base {
+  html {
+    @apply bg-paper text-ink;
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply font-sans antialiased;
+    background-image: radial-gradient(rgba(27, 34, 30, 0.035) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+  h1, h2, h3 {
+    @apply font-serif;
+  }
+  :focus-visible {
+    outline: 3px solid theme(colors.brass);
+    outline-offset: 2px;
+  }
+  ::selection {
+    background: theme(colors.brass/25%);
+  }
+}
+
+@layer utilities {
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: theme(colors.ink/20%) transparent;
+  }
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: theme(colors.ink/20%);
+    border-radius: 999px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
