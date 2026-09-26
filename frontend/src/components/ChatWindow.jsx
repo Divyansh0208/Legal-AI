@@ -65,7 +65,7 @@ function Message({ role, content, disclaimer, sources }) {
             {sources.map((s, i) => (
               <span
                 key={i}
-                className="rounded-full bg-ink/5 px-2 py-0.5 text-xs text-ink/60"
+                className="rounded-full bg-ink/5 px-2 py-0.5 text-xs text-ink/70"
                 title={s.source}
               >
                 Source {i + 1}
@@ -73,7 +73,7 @@ function Message({ role, content, disclaimer, sources }) {
             ))}
           </div>
         )}
-        {disclaimer && <p className="mt-2 text-xs text-ink/50">{disclaimer}</p>}
+        {disclaimer && <p className="mt-2 text-xs text-ink/70">{disclaimer}</p>}
       </div>
     </div>
   );
@@ -145,7 +145,7 @@ export default function ChatWindow({ messages, onSend, isLoading, error }) {
       >
         {messages.length === 0 && (
           <div className="animate-fade-up">
-            <p className="text-ink/60">
+            <p className="text-ink/70">
               Ask a question about a tenancy, contract, or consumer-rights issue to get started.
             </p>
             <div className="mt-4 flex flex-wrap gap-2">
