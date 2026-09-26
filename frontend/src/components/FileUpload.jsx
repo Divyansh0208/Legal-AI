@@ -104,7 +104,7 @@ export default function FileUpload() {
             aria-describedby="upload-status"
           />
         </label>
-        <p className="mt-2 text-xs text-ink/50">PDF only, up to 15MB.</p>
+        <p className="mt-2 text-xs text-ink/70">PDF only, up to 15MB.</p>
       </div>
 
       <div id="upload-status" aria-live="polite">
@@ -145,13 +145,13 @@ export default function FileUpload() {
               <button
                 type="button"
                 onClick={reset}
-                className="flex-none rounded-md border border-ink/15 px-2.5 py-1 text-xs font-medium text-ink/60 transition-colors hover:border-ink/30 hover:text-ink"
+                className="flex-none rounded-md border border-ink/15 px-2.5 py-1 text-xs font-medium text-ink/70 transition-colors hover:border-ink/30 hover:text-ink"
               >
                 Upload another
               </button>
             </div>
             <FormattedText text={result.summary} />
-            <p className="mt-4 border-t border-ink/10 pt-3 text-xs text-ink/50">
+            <p className="mt-4 border-t border-ink/10 pt-3 text-xs text-ink/70">
               {result.page_count} page{result.page_count === 1 ? "" : "s"} read
               {result.ocr_used ? ", including scanned pages read with OCR" : ""}.
             </p>
