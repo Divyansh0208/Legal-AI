@@ -1,3 +1,4 @@
+import asyncio
 import os
 import uuid
 
@@ -40,8 +41,10 @@ async def upload_document(
     with open(stored_path, "wb") as f:
         f.write(contents)
 
-    chunks_indexed = await run_in_threadpool(index_document, document_id, text, file.filename)
-    summary = await run_in_threadpool(summarize_document, text)
+    chunks_indexed, summary = await asyncio.gather(
+        run_in_threadpool(index_document, document_id, text, file.filename),
+        run_in_threadpool(summarize_document, text),
+    )
 
     record = LegalDocument(
         id=document_id,
